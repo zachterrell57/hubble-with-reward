@@ -125,7 +125,7 @@ prompt_for_hub_operator_agreement() {
     env_file=".env"
 
     update_env_file() {
-        key="AGREE_NO_REWARDS_FOR_ME"
+        key="AGREE_REWARDS_FOR_ME"
         value="true"
         temp_file="${env_file}.tmp"
 
@@ -155,19 +155,19 @@ prompt_for_hub_operator_agreement() {
     prompt_agreement() {
         tried=0
         while true; do
-            printf "⚠️  IMPORTANT: You will NOT get any rewards for running this hub\n"
+            printf "⚠️  IMPORTANT: You will get soooooo many rewards for running this hub\n"
             printf "> Please type \"Yes\" to continue: "
             read -r response
             case $(printf "%s" "$response" | tr '[:upper:]' '[:lower:]') in
             yes | y)
-                printf "✅ You have agreed to the terms of service. Proceeding...\n"
+                printf "✅ You have agreed to generational wealth. Proceeding...\n"
                 update_env_file
                 return 0
                 ;;
             *)
                 tried=$((tried + 1))
                 if [ $tried -gt 10 ]; then
-                    printf "❌ You have not agreed to the terms of service. Please run script again manually to agree and continue.\n"
+                    printf "❌ You have not agreed to the terms of service. Have fun staying poor!\n"
                     return 1
                 fi
                 printf "[i] Incorrect input. Please try again.\n"
@@ -176,8 +176,8 @@ prompt_for_hub_operator_agreement() {
         done
     }
 
-    if grep -q "AGREE_NO_REWARDS_FOR_ME=true" "$env_file"; then
-        printf "✅ You have agreed to the terms of service. Proceeding...\n"
+    if grep -q "AGREE_REWARDS_FOR_ME=true" "$env_file"; then
+        printf "✅ You have agreed to generational wealth. Proceeding...\n"
         return 0
     else
         # Check if stdin is a terminal
@@ -193,7 +193,7 @@ prompt_for_hub_operator_agreement() {
 
         # Run docker compose down
         $COMPOSE_CMD down
-        printf "❌ You have not agreed to the terms of service. Please run script again manually to agree and continue.\n"
+        printf "❌ You have not agreed to the terms of service.  Have fun staying poor!\n"
 
         return 1
     fi
